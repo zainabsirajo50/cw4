@@ -65,6 +65,33 @@ class _TaskListScreenState extends State<TaskListScreen> {
       ),
       body: Column(
         children: [
+           // Add Task input field
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              children: [
+                // Input field for adding new tasks
+                Expanded(
+                  child: TextField(
+                    controller: taskController,  // Use the controller to get the input
+                    decoration: InputDecoration(
+                      labelText: 'New Task',
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                ),
+                SizedBox(width: 10),
+                ElevatedButton(
+                  onPressed: () {
+                    if (taskController.text.isNotEmpty) {
+                      addTask(taskController.text);  // Add the task on button press
+                    }
+                  },
+                  child: Text('Add Task'),
+                ),
+              ],
+            ),
+          ),
           // Expanded widget for the task list display
           Expanded(
             child: ListView.builder(
@@ -101,33 +128,6 @@ class _TaskListScreenState extends State<TaskListScreen> {
                   ),
                 );
               },
-            ),
-          ),
-          // Add Task input field
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              children: [
-                // Input field for adding new tasks
-                Expanded(
-                  child: TextField(
-                    controller: taskController,  // Use the controller to get the input
-                    decoration: InputDecoration(
-                      labelText: 'New Task',
-                      border: OutlineInputBorder(),
-                    ),
-                  ),
-                ),
-                SizedBox(width: 10),
-                ElevatedButton(
-                  onPressed: () {
-                    if (taskController.text.isNotEmpty) {
-                      addTask(taskController.text);  // Add the task on button press
-                    }
-                  },
-                  child: Text('Add Task'),
-                ),
-              ],
             ),
           ),
         ],
