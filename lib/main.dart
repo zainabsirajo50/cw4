@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 void main() {
   runApp(TaskApp());
 }
@@ -18,7 +17,6 @@ class TaskApp extends StatelessWidget {
   }
 }
 
-
 class Task {
   String name;
   bool isCompleted;
@@ -34,12 +32,15 @@ class TaskListScreen extends StatefulWidget {
 class _TaskListScreenState extends State<TaskListScreen> {
   // A list to hold tasks
   List<Task> tasks = [];
+  // Controller for the TextField
+  TextEditingController taskController = TextEditingController();
 
   // Method to add a new task
   void addTask(String taskName) {
     setState(() {
       tasks.add(Task(name: taskName));  // Updates the task list and re-renders the UI
     });
+    taskController.clear();  // Clear the text field after adding a task
   }
 
   // Method to complete a task
@@ -110,21 +111,19 @@ class _TaskListScreenState extends State<TaskListScreen> {
                 // Input field for adding new tasks
                 Expanded(
                   child: TextField(
+                    controller: taskController,  // Use the controller to get the input
                     decoration: InputDecoration(
                       labelText: 'New Task',
                       border: OutlineInputBorder(),
                     ),
-                    onSubmitted: (value) {
-                      if (value.isNotEmpty) {
-                        addTask(value);  // Add the task when the 'Enter' key is pressed
-                      }
-                    },
                   ),
                 ),
                 SizedBox(width: 10),
                 ElevatedButton(
                   onPressed: () {
-                    // Additional button to add tasks manually (can be customized)
+                    if (taskController.text.isNotEmpty) {
+                      addTask(taskController.text);  // Add the task on button press
+                    }
                   },
                   child: Text('Add Task'),
                 ),
